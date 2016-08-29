@@ -3,7 +3,6 @@
 cd /src
 # collectstatic needs DJANGO_SETTINGS_MODULE
 export DJANGO_SETTINGS_MODULE=base_rsc.settings
-# python manage.py syncdb --noinput
 python manage.py migrate --noinput
 python manage.py collectstatic --noinput
 python manage.py makemessages -a
