@@ -22,5 +22,3 @@ WORKDIR /python-dep
 RUN pip install -r requirements.txt
 RUN rm requirements.txt
 WORKDIR /
-
-#EXPOSE 8000
