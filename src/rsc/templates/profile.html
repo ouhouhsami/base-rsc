@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}Account Profile{% endblock %}
+
+{% block content %}
+
+<h3>Créer un rapport</h3>
+
+<ul>
+{% for structure in structures %}
+<li><a href="{% url 'create' %}?structure={{ structure.id }}">Ajouter un nouveau rapport</a> {{ structure }} </li>
+{% endfor %}
+</ul>
+
+<h3>Rapports existants</h3>
+
+{% regroup surveys by year as year_list %}
+
+<ul class="list-unstyled">
+{% for year in year_list %}
+    <li>{{ year.grouper }}
+    <ul>
+        {% for survey in year.list %}
+          <li>{{ survey.structure }} : <a href="{% url 'detail' survey.id %}">consulter</a> - <a href="{% url 'edit' survey.id %}">modifier</a></li>
+        {% endfor %}
+    </ul>
+    </li>
+{% endfor %}
+</ul>
+
+{% endblock %}

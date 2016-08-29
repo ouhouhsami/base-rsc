@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<h1 class="page-header">{{ survey.structure }} <small class="text-muted">{{ survey.year }}</small></h1>
+
+<div class="alert alert-warning" role="alert">
+  Proposer une maquette pour cette page. Faut-il aussi prévoir une comparaison par année ?
+</div>
+
+<ul>
+<li>Hommes A+ : {{ survey.nb_of_men_a_plus}}</li>
+<li>Femmes A+ : {{ survey.nb_of_women_a_plus}}</li>
+<li>...</li>
+</ul>
+{% endblock %}

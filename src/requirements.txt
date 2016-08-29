@@ -1,0 +1,7 @@
+Django==1.9.8
+psycopg2
+django-extra-views
+django-floppyforms==1.7.0
+django-registration-redux==1.4
+six==1.10.0
+wsgiref==0.1.2

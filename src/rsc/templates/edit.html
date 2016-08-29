@@ -1,0 +1,887 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+
+<form action="." method="post" id="survey" novalidate>
+
+
+<h1>Edition d'un rapport de situation comparée</h1>
+    {{ form.errors }}
+
+    {% csrf_token %}
+
+    <div class="form-group">
+        <label for="structure">Structure</label>
+        {{ form.structure }}
+    </div>
+
+    <div class="form-group">
+        <label for="year">Année</label>
+        {{ form.year }}
+    </div>
+
+    <div class="form-group" >
+        <table class="table table-striped table-sm">
+            <thead class="thead-inverse">
+                <tr>
+                    <th>Effectifs</th>
+                    <th>Hommes</th>
+                    <th>% par catégorie</th>
+                    <th>Femmes</th>
+                    <th>% par catégorie</th>
+                    <th>Total</th>
+                    <th>% hommes</th>
+                    <th>% femmes</th>
+                </tr>
+            </thead>
+            <tr>
+                <td>A+</td>
+                <td>{{ form.nb_of_men_a_plus }}</td>
+                <td>{% verbatim %}{{ nb_of_men_a_plus_ratio | percent | round 2 }}{% endverbatim %}</td>
+                <td>{{ form.nb_of_women_a_plus }}</td>
+                <td>{% verbatim %}{{ nb_of_women_a_plus_ratio | percent | round 2 }}{% endverbatim %}</td>
+                <td>{% verbatim %}{{ total_men_women_a_plus }}{% endverbatim %}</td>
+                <td>{% verbatim %}{{ ratio_men_women_a_plus | percent | round 2 }}{% endverbatim %}</td>
+                <td>{% verbatim %}{{ ratio_women_men_a_plus | percent | round 2 }}{% endverbatim %}</td>
+            </tr>
+            <tr>
+                <td>A</td>
+                <td>{{ form.nb_of_men_a }}</td>
+                <td>{% verbatim %}{{ nb_of_men_a_ratio | percent | round 2 }}{% endverbatim %}</td>
+                <td>{{ form.nb_of_women_a }}</td>
+                <td>{% verbatim %}{{ nb_of_women_a_ratio | percent | round 2 }}{% endverbatim %}</td>
+                <td>{% verbatim %}{{ total_men_women_a }}{% endverbatim %}</td>
+                <td>{% verbatim %}{{ ratio_men_women_a | percent | round 2 }}{% endverbatim %}</td>
+                <td>{% verbatim %}{{ ratio_women_men_a | percent | round 2 }}{% endverbatim %}</td>
+            </tr>
+            <tr>
+                <td>B</td>
+                <td>{{ form.nb_of_men_b }}</td>
+                <td>{% verbatim %}{{ nb_of_men_b_ratio | percent | round 2 }}{% endverbatim %}</td>
+                <td>{{ form.nb_of_women_b }}</td>
+                <td>{% verbatim %}{{ nb_of_women_b_ratio | percent | round 2 }}{% endverbatim %}</td>
+                <td>{% verbatim %}{{ total_men_women_b }}{% endverbatim %}</td>
+                <td>{% verbatim %}{{ ratio_men_women_b | percent | round 2 }}{% endverbatim %}</td>
+                <td>{% verbatim %}{{ ratio_women_men_b | percent | round 2 }}{% endverbatim %}</td>
+            </tr>
+            <tr>
+                <td>C</td>
+                <td>{{ form.nb_of_men_c }}</td>
+                <td>{% verbatim %}{{ nb_of_men_c_ratio | percent | round 2 }}{% endverbatim %}</td>
+                <td>{{ form.nb_of_women_c }}</td>
+                <td>{% verbatim %}{{ nb_of_women_c_ratio | percent | round 2 }}{% endverbatim %}</td>
+                <td>{% verbatim %}{{ total_men_women_c }}{% endverbatim %}</td>
+                <td>{% verbatim %}{{ ratio_men_women_c | percent | round 2 }}{% endverbatim %}</td>
+                <td>{% verbatim %}{{ ratio_women_men_c | percent | round 2 }}{% endverbatim %}</td>
+            </tr>
+            <tr>
+                <td>OPA</td>
+                <td>{{ form.nb_of_men_opa }}</td>
+                <td>{% verbatim %}{{ nb_of_men_opa_ratio | percent | round 2 }}{% endverbatim %}</td>
+                <td>{{ form.nb_of_women_opa }}</td>
+                <td>{% verbatim %}{{ nb_of_women_opa_ratio | percent | round 2 }}{% endverbatim %}</td>
+                <td>{% verbatim %}{{ total_men_women_opa }}{% endverbatim %}</td>
+                <td>{% verbatim %}{{ ratio_men_women_opa | percent | round 2 }}{% endverbatim %}</td>
+                <td>{% verbatim %}{{ ratio_women_men_opa | percent | round 2 }}{% endverbatim %}</td>
+            </tr>
+            <tr>
+                <td>C exploitation</td>
+                <td>{{ form.nb_of_men_c_exploitation }}</td>
+                <td>{% verbatim %}{{ nb_of_men_c_exploitation_ratio | percent | round 2 }}{% endverbatim %}</td>
+                <td>{{ form.nb_of_women_c_exploitation }}</td>
+                <td>{% verbatim %}{{ nb_of_women_c_exploitation_ratio | percent | round 2 }}{% endverbatim %}</td>
+                <td>{% verbatim %}{{ total_men_women_c_exploitation }}{% endverbatim %}</td>
+                <td>{% verbatim %}{{ ratio_men_women_c_exploitation | percent | round 2 }}{% endverbatim %}</td>
+                <td>{% verbatim %}{{ ratio_women_men_c_exploitation | percent | round 2 }}{% endverbatim %}</td>
+            </tr>
+            <tr>
+                <td>Total</td>
+                <td>{% verbatim %}{{ nb_of_men_total }}{% endverbatim %}</td>
+                <td></td>
+                <td>{% verbatim %}{{ nb_of_women_total }}{% endverbatim %}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+
+    </div>
+
+    <div class="ct-chart ct-double-octave"></div>
+
+    <div class="form-group">
+
+        <table class="table table-striped table-sm">
+            <thead class="thead-inverse">
+                <tr>
+                    <th>Âge moyen</th>
+                    <th>Hommes</th>
+                    <th>Femmes</th>
+                    <th>Âge moyen par catégorie</th>
+                </tr>
+            </thead>
+            <tr>
+                <td>A+</td>
+                <td>{{ form.age_men_a_plus }}</td>
+                <td>{{ form.age_women_a_plus }}</td>
+                <td>{% verbatim %}{{ age_category_a_plus_mean }}{% endverbatim %}</td>
+            </tr>
+            <tr>
+                <td>A</td>
+                <td>{{ form.age_men_a }}</td>
+                <td>{{ form.age_women_a }}</td>
+                <td>{% verbatim %}{{ age_category_a_mean }}{% endverbatim %}</td>
+            </tr>
+            <tr>
+                <td>B</td>
+                <td>{{ form.age_men_b }}</td>
+                <td>{{ form.age_women_b }}</td>
+                <td>{% verbatim %}{{ age_category_b_mean }}{% endverbatim %}</td>
+            </tr>
+            <tr>
+                <td>C</td>
+                <td>{{ form.age_men_c }}</td>
+                <td>{{ form.age_women_c }}</td>
+                <td>{% verbatim %}{{ age_category_c_mean }}{% endverbatim %}</td>
+            </tr>
+            <tr>
+                <td>OPA</td>
+                <td>{{ form.age_men_opa }}</td>
+                <td>{{ form.age_women_opa }}</td>
+                <td>{% verbatim %}{{ age_category_opa_mean }}{% endverbatim %}</td>
+            </tr>
+            <tr>
+                <td>C exploitation</td>
+                <td>{{ form.age_men_c_exploitation }}</td>
+                <td>{{ form.age_women_c_exploitation }}</td>
+                <td>{% verbatim %}{{ age_category_c_exploitation_mean }}{% endverbatim %}</td>
+            </tr>
+            <tr>
+                <td>Moyenne</td>
+                <td>{% verbatim %}{{ age_men_mean | round 2 }}{% endverbatim %}</td>
+                <td>{% verbatim %}{{ age_women_mean | round 2 }}{% endverbatim %}</td>
+                <td>{% verbatim %}{{ age_mean | round 2 }}{% endverbatim %}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="form-group">
+        <table class="table table-striped table-sm">
+            <thead class="thead-inverse">
+                <tr>
+                    <th>Effectif selon temps de travail</th>
+                    <th>Hommes temps plein</th>
+                    <th>Hommes temps partiels</th>
+                    <th>% TP</th>
+                    <th>Femmes temps plein</th>
+                    <th>Femmes temps partiels</th>
+                    <th>% TP</th>
+                    <th>Temps partiel total</th>
+                </tr>
+            </thead>
+            <tr>
+                <td>A+</td>
+                <td>{% verbatim %}{{ nb_of_men_a_plus }}{% endverbatim %}</td>
+                <td>{{ form.part_time_men_a_plus }}</td>
+                <td>{% verbatim %}{{ ratio_part_time_men_a_plus  | percent | round 2 }}{% endverbatim %}</td>
+                <td>{% verbatim %}{{ nb_of_women_a_plus }}{% endverbatim %}</td>
+                <td>{{ form.part_time_women_a_plus }}</td>
+                <td>{% verbatim %}{{ ratio_part_time_women_a_plus | percent | round 2 }}{% endverbatim %}</td>
+                <td>{% verbatim %}{{ part_time_men_women_a_plus }}{% endverbatim %}</td>
+            </tr>
+            <tr>
+                <td>A</td>
+                <td>{% verbatim %}{{ nb_of_men_a }}{% endverbatim %}</td>
+                <td>{{ form.part_time_men_a }}</td>
+                <td>{% verbatim %}{{ ratio_part_time_men_a | percent | round 2 }}{% endverbatim %}</td>
+                <td>{% verbatim %}{{ nb_of_women_a }}{% endverbatim %}</td>
+                <td>{{ form.part_time_women_a }}</td>
+                <td>{% verbatim %}{{ ratio_part_time_women_a | percent | round 2 }}{% endverbatim %}</td>
+                <td>{% verbatim %}{{ part_time_men_women_a }}{% endverbatim %}</td>
+            </tr>
+            <tr>
+                <td>B</td>
+                <td>{% verbatim %}{{ nb_of_men_b }}{% endverbatim %}</td>
+                <td>{{ form.part_time_men_b }}</td>
+                <td>{% verbatim %}{{ ratio_part_time_men_b | percent | round 2 }}{% endverbatim %}</td>
+                <td>{% verbatim %}{{ nb_of_women_b }}{% endverbatim %}</td>
+                <td>{{ form.part_time_women_b }}</td>
+                <td>{% verbatim %}{{ ratio_part_time_women_b | percent | round 2 }}{% endverbatim %}</td>
+                <td>{% verbatim %}{{ part_time_men_women_b }}{% endverbatim %}</td>
+            </tr>
+            <tr>
+                <td>C</td>
+                <td>{% verbatim %}{{ nb_of_men_c }}{% endverbatim %}</td>
+                <td>{{ form.part_time_men_c }}</td>
+                <td>{% verbatim %}{{ ratio_part_time_men_c | percent | round 2 }}{% endverbatim %}</td>
+                <td>{% verbatim %}{{ nb_of_women_c }}{% endverbatim %}</td>
+                <td>{{ form.part_time_women_c }}</td>
+                <td>{% verbatim %}{{ ratio_part_time_women_c | percent | round 2 }}{% endverbatim %}</td>
+                <td>{% verbatim %}{{ part_time_men_women_c }}{% endverbatim %}</td>
+            </tr>
+            <tr>
+                <td>OPA</td>
+                <td>{% verbatim %}{{ nb_of_men_opa }}{% endverbatim %}</td>
+                <td>{{ form.part_time_men_opa }}</td>
+                <td>{% verbatim %}{{ ratio_part_time_men_opa | percent | round 2 }}{% endverbatim %}</td>
+                <td>{% verbatim %}{{ nb_of_women_opa }}{% endverbatim %}</td>
+                <td>{{ form.part_time_women_opa }}</td>
+                <td>{% verbatim %}{{ ratio_part_time_women_opa | percent | round 2 }}{% endverbatim %}</td>
+                <td>{% verbatim %}{{ part_time_men_women_opa }}{% endverbatim %}</td>
+            </tr>
+            <tr>
+                <td>C exploitation</td>
+                <td>{% verbatim %}{{ nb_of_men_c_exploitation }}{% endverbatim %}</td>
+                <td>{{ form.part_time_men_c_exploitation }}</td>
+                <td>{% verbatim %}{{ ratio_part_time_men_c_exploitation | percent | round 2 }}{% endverbatim %}</td>
+                <td>{% verbatim %}{{ nb_of_women_c_exploitation }}{% endverbatim %}</td>
+                <td>{{ form.part_time_women_c_exploitation }}</td>
+                <td>{% verbatim %}{{ ratio_part_time_women_c_exploitation | percent | round 2 }}{% endverbatim %}</td>
+                <td>{% verbatim %}{{ part_time_men_women_c_exploitation }}{% endverbatim %}</td>
+            </tr>
+            <tr>
+                <td>Total</td>
+                <td>{% verbatim %}{{ nb_of_men_total }}{% endverbatim %}</td>
+                <td>{% verbatim %}{{ part_time_men }}{% endverbatim %}</td>
+                <td>{% verbatim %}{{ ratio_part_time_men | percent | round 2 }}{% endverbatim %}</td>
+                <td>{% verbatim %}{{ nb_of_women_total }}{% endverbatim %}</td>
+                <td>{% verbatim %}{{ part_time_women }}{% endverbatim %}</td>
+                <td>{% verbatim %}{{ ratio_part_time_women | percent | round 2 }}{% endverbatim %}</td>
+                <td>{% verbatim %}{{ part_time_men_women }}{% endverbatim %}</td>
+            </tr>
+        </table>
+        <small class="form-text text-muted">Base de données VISIOM</small>
+    </div>
+
+
+    <div class="form-group">
+        <table class="table table-striped table-sm">
+            <thead class="thead-inverse">
+              <tr>
+                <th>Effectifs physiques
+                </th>
+                <th>Hommes
+                </th>
+                <th>Taux
+                </th>
+                <th>Femmes
+                </th>
+                <th>Taux</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tr>
+            <td>Travail de nuit ou atypique dont travail durant le week-end
+            </td>
+            <td>{{ form.nights_men }}</td>
+            <td>{% verbatim %}{{ ratio_nights_men | percent | round 2 }}{% endverbatim %}</td>
+            <td>{{ form.nigths_women }}</td>
+            <td>{% verbatim %}{{ ratio_nights_women | percent | round 2 }}{% endverbatim %}</td>
+            <td>{% verbatim %}{{ total_nights }}{% endverbatim %}</td>
+        </tr>
+        <tr>
+            <td>Astreintes
+            </td>
+            <td>{{ form.penalties_men }}</td>
+            <td>{% verbatim %}{{ ratio_penalties_men | percent | round 2 }}{% endverbatim %}</td>
+            <td>{{ form.penalties_women }}</td>
+            <td>{% verbatim %}{{ ratio_penalties_women | percent | round 2 }}{% endverbatim %}</td>
+            <td>{% verbatim %}{{ total_penalties }}{% endverbatim %}</td>
+        </tr>
+    </table>
+
+</div>
+
+<div class="form-group">
+    <table class="table table-striped table-sm">
+        <thead class="thead-inverse">
+          <tr>
+            <th>Effectifs physiques
+            </th>
+            <th>Hommes
+            </th>
+            <th>% des hommes
+            </th>
+            <th>Femmes
+            </th>
+            <th>% des femmes
+            </th>
+            <th>Total
+            </th>
+            <th>% des agents
+            </th>
+        </tr>
+    </thead>
+    <tr>
+        <td>Ayant un CET au 31/12
+        </td>
+        <td>{{ form.cet_men }}</td>
+        <td>{% verbatim %}{{ ratio_cet_men | percent | round 2 }}{% endverbatim %}</td>
+        <td>{{ form.cet_women }}</td>
+        <td>{% verbatim %}{{ ratio_cet_women | percent | round 2 }}{% endverbatim %}</td>
+        <td>{% verbatim %}{{ total_cet }}{% endverbatim %}</td>
+        <td>{% verbatim %}{{ ratio_cet | percent | round 2 }}{% endverbatim %}</td>
+    </tr>
+    <tr>
+        <td>Nb  jours stockés au 31/12
+        </td>
+        <td>{{ form.stocked_men }}</td>
+        <td>{% verbatim %}{{ ratio_stocked_men | percent | round 2 }}{% endverbatim %}</td>
+        <td>{{ form.stocked_women }}</td>
+        <td>{% verbatim %}{{ ratio_stocked_women | percent | round 2 }}{% endverbatim %}</td>
+        <td>{% verbatim %}{{ total_stocked }}{% endverbatim %}</td>
+        <td>{% verbatim %}{{ ratio_stocked | percent | round 2 }}{% endverbatim %}</td>
+    </tr>
+    <tr>
+        <td>Nb  jours stockés en n-1
+        </td>
+        <td>{{ form.stocked_n_1_men }}</td>
+        <td>{% verbatim %}{{ ratio_stocked_n_1_men | percent | round 2 }}{% endverbatim %}</td>
+        <td>{{ form.stocked_n_1_women }}</td>
+        <td>{% verbatim %}{{ ratio_stocked_n_1_women | percent | round 2 }}{% endverbatim %}</td>
+        <td>{% verbatim %}{{ total_stocked_n_1 }}{% endverbatim %}</td>
+        <td>{% verbatim %}{{ ratio_stocked_n_1 | percent | round 2 }}{% endverbatim %}</td>
+    </tr>
+    <tr>
+        <td>Nb jours utilisés n-1
+        </td>
+        <td>{{ form.used_n_1_men }}</td>
+        <td>{% verbatim %}{{ ratio_used_n_1_men | percent | round 2 }}{% endverbatim %}</td>
+        <td>{{ form.used_n_1_women }}</td>
+        <td>{% verbatim %}{{ ratio_used_n_1_women | percent | round 2 }}{% endverbatim %}</td>
+        <td>{% verbatim %}{{ total_used_n_1 }}{% endverbatim %}</td>
+        <td>{% verbatim %}{{ ratio_used_n_1 | percent | round 2 }}{% endverbatim %}</td>
+    </tr>
+    <tr>
+        <td>Nb jours rachetés
+        </td>
+        <td>{{ form.bought_men }}</td>
+        <td>{% verbatim %}{{ ratio_bought_men | percent | round 2 }}{% endverbatim %}</td>
+        <td>{{ form.bought_women }}</td>
+        <td>{% verbatim %}{{ ratio_bought_women | percent | round 2 }}{% endverbatim %}</td>
+        <td>{% verbatim %}{{ total_bought }}{% endverbatim %}</td>
+        <td>{% verbatim %}{{ ratio_bought | percent | round 2 }}{% endverbatim %}</td>
+    </tr>
+</table>
+
+</div>
+
+<div class="form-group">
+    {{ inlines.0.management_form }}
+    <table class="table table-striped table-sm">
+        <thead class="thead-inverse">
+            <tr>
+                <th>Type de recrutement</th>
+                <th>Hommes</th>
+                <th>Femmes</th>
+                <th>Supprimer</th>
+            </tr>
+        </thead>
+        {% for form in inlines.0 %}
+        {% for hidden in form.hidden_fields %}
+        {{ hidden }}
+        {% endfor %}
+        <tr>
+            <td>{{ form.label }}</td>
+            <td>{{ form.men }}</td>
+            <td>{{ form.women }}</td>
+            <td>{{ form.DELETE }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</div>
+
+<div class="form-group">
+    <table class="table table-striped table-sm">
+        <thead class="thead-inverse">
+          <tr>
+            <th>Nb d’agents promus/promouvables (hors concours et examens pro)
+            </th>
+            <th>Hommes promouvables
+            </th>
+            <th>Hommes proposés
+            </th>
+            <th>Hommes promus
+            </th>
+            <th>Femmes promouvables
+            </th>
+            <th>Femmes proposées
+            </th>
+            <th>Femmes promues
+            </th>
+        </tr>
+    </thead>
+    <tr>
+        <td>De A en A+
+        </td>
+        <td>{{ form.a_to_a_plus_promotable_men }}</td>
+        <td>{{ form.a_to_a_plus_proposed_men }}</td>
+        <td>{{ form.a_to_a_plus_promoted_men }}</td>
+        <td>{{ form.a_to_a_plus_promotable_women }}</td>
+        <td>{{ form.a_to_a_plus_proposed_women }}</td>
+        <td>{{ form.a_to_a_plus_promoted_women }}</td>
+    </tr>
+    <tr>
+        <td>De B en A
+        </td>
+        <td>{{ form.b_to_a_promotable_men }}</td>
+        <td>{{ form.b_to_a_proposed_men }}</td>
+        <td>{{ form.b_to_a_promoted_men }}</td>
+        <td>{{ form.b_to_a_promotable_women }}</td>
+        <td>{{ form.b_to_a_proposed_women }}</td>
+        <td>{{ form.b_to_a_promoted_women }}</td>
+    </tr>
+    <tr>
+        <td>Interne B
+        </td>
+        <td>{{ form.intern_b_promotable_men }}</td>
+        <td>{{ form.intern_b_proposed_men }}</td>
+        <td>{{ form.intern_b_promoted_men }}</td>
+        <td>{{ form.intern_b_promotable_women }}</td>
+        <td>{{ form.intern_b_proposed_women }}</td>
+        <td>{{ form.intern_b_promoted_women }}</td>
+    </tr>
+    <tr>
+        <td>De C en B
+        </td>
+        <td>{{ form.c_to_b_promotable_men }}</td>
+        <td>{{ form.c_to_b_proposed_men }}</td>
+        <td>{{ form.c_to_b_promoted_men }}</td>
+        <td>{{ form.c_to_b_promotable_women }}</td>
+        <td>{{ form.c_to_b_proposed_women }}</td>
+        <td>{{ form.c_to_b_promoted_women }}</td>
+    </tr>
+    <tr>
+        <td>Interne C
+        </td>
+        <td>{{ form.intern_c_promotable_men }}</td>
+        <td>{{ form.intern_c_proposed_men }}</td>
+        <td>{{ form.intern_c_promoted_men }}</td>
+        <td>{{ form.intern_c_promotable_women }}</td>
+        <td>{{ form.intern_c_proposed_women }}</td>
+        <td>{{ form.intern_c_promoted_women }}</td>
+    </tr>
+    <tr>
+        <td>Interne OPA
+        </td>
+        <td>{{ form.intern_opa_promotable_men }}</td>
+        <td>{{ form.intern_opa_proposed_men }}</td>
+        <td>{{ form.intern_opa_promoted_men }}</td>
+        <td>{{ form.intern_opa_promotable_women }}</td>
+        <td>{{ form.intern_opa_proposed_women }}</td>
+        <td>{{ form.intern_opa_promoted_women }}</td>
+    </tr>
+    <tr>
+        <td>Interne C exploitation
+        </td>
+        <td>{{ form.intern_c_exploitation_promotable_men }}</td>
+        <td>{{ form.intern_c_exploitation_proposed_men }}</td>
+        <td>{{ form.intern_c_exploitation_promoted_men }}</td>
+        <td>{{ form.intern_c_exploitation_promotable_women }}</td>
+        <td>{{ form.intern_c_exploitation_proposed_women }}</td>
+        <td>{{ form.intern_c_exploitation_promoted_women }}</td>
+    </tr>
+    <tr>
+        <td>Total
+        </td>
+        <td>{% verbatim %}{{ total_promotable_men }}{% endverbatim %}</td>
+        <td>{% verbatim %}{{ total_proposed_men }}{% endverbatim %}</td>
+        <td>{% verbatim %}{{ total_promoted_men }}{% endverbatim %}</td>
+        <td>{% verbatim %}{{ total_promotable_women }}{% endverbatim %}</td>
+        <td>{% verbatim %}{{ total_proposed_women }}{% endverbatim %}</td>
+        <td>{% verbatim %}{{ total_promoted_women }}{% endverbatim %}</td>
+    </tr>
+    <tr>
+        <td>%
+        </td>
+        <td></td>
+        <td>{% verbatim %}{{ ratio_proposed_men | percent | round 2 }}{% endverbatim %}</td>
+        <td>{% verbatim %}{{ ratio_promoted_men | percent | round 2 }}{% endverbatim %}</td>
+        <td></td>
+        <td>{% verbatim %}{{ ratio_proposed_women | percent | round 2 }}{% endverbatim %}</td>
+        <td>{% verbatim %}{{ ratio_promoted_women | percent | round 2 }}{% endverbatim %}</td>
+    </tr>
+</table>
+
+</div>
+
+<div class="form-group">
+    <table class="table table-striped table-sm">
+        <thead class="thead-inverse">
+          <tr>
+            <th>Taux de mobilité année n
+            </th>
+            <th>Hommes
+            </th>
+            <th>% des hommes
+            </th>
+            <th>Femmes
+            </th>
+            <th>% des femmes
+            </th>
+            <th>Total
+            </th>
+        </tr>
+    </thead>
+    <tr>
+        <td>Entrant : nouveaux agents
+        </td>
+        <td>{{ form.incoming_men }}</td>
+        <td>{% verbatim %}{{ ratio_incoming_men | percent | round 2 }}{% endverbatim %}</td>
+        <td>{{ form.incoming_women }}</td>
+        <td>{% verbatim %}{{ ratio_incoming_women | percent | round 2 }}{% endverbatim %}</td>
+        <td>{% verbatim %}{{ total_incoming }}{% endverbatim %}</td>
+    </tr>
+    <tr>
+        <td>Interne (fonctionnelle)
+        </td>
+        <td>{{ form.intern_men }}</td>
+        <td>{% verbatim %}{{ ratio_intern_men | percent | round 2 }}{% endverbatim %}</td>
+        <td>{{ form.intern_women }}</td>
+        <td>{% verbatim %}{{ ratio_intern_women | percent | round 2 }}{% endverbatim %}</td>
+        <td>{% verbatim %}{{ total_intern }}{% endverbatim %}</td>
+    </tr>
+    <tr>
+        <td>Mutation externe
+        </td>
+        <td>{{ form.external_transfer_men }}</td>
+        <td>{% verbatim %}{{ ratio_external_transfer_men | percent | round 2 }}{% endverbatim %}</td>
+        <td>{{ form.external_transfer_women }}</td>
+        <td>{% verbatim %}{{ ratio_external_transfer_women | percent | round 2 }}{% endverbatim %}</td>
+        <td>{% verbatim %}{{ total_external_transfer }}{% endverbatim %}</td>
+    </tr>
+    <tr>
+        <td>Retraite
+        </td>
+        <td>{{ form.retirement_men }}</td>
+        <td>{% verbatim %}{{ ratio_retirement_men | percent | round 2 }}{% endverbatim %}</td>
+        <td>{{ form.retirement_women }}</td>
+        <td>{% verbatim %}{{ ratio_retirement_women | percent | round 2 }}{% endverbatim %}</td>
+        <td>{% verbatim %}{{ total_retirement }}{% endverbatim %}</td>
+    </tr>
+    <tr>
+        <td>Autre (dispo,  …)
+        </td>
+        <td>{{ form.other_men }}</td>
+        <td>{% verbatim %}{{ ratio_other_men | percent | round 2 }}{% endverbatim %}</td>
+        <td>{{ form.other_women }}</td>
+        <td>{% verbatim %}{{ ratio_other_women | percent | round 2 }}{% endverbatim %}</td>
+        <td>{% verbatim %}{{ total_other }}{% endverbatim %}</td>
+    </tr>
+    <tr>
+        <td>Taux de rotation
+        </td>
+        <td>{% verbatim %}{{ turnover_men | percent | round 2 }}{% endverbatim %}</td>
+        <td></td>
+        <td>{% verbatim %}{{ turnover_women | percent | round 2 }}{% endverbatim %}</td>
+        <td></td>
+        <td>{% verbatim %}{{ turnover | percent | round 2 }}{% endverbatim %}</td>
+    </tr>
+</table>
+
+</div>
+
+<div class="form-group">
+
+    {{ inlines.1.management_form }}
+    <table class="table table-striped table-sm">
+        <thead class="thead-inverse">
+            <tr>
+                <th>Composition des jurys<br>Jury de :</th>
+                <th>Hommes</th>
+                <th>Femmes</th>
+                <th>Supprimer</th>
+            </tr>
+        </thead>
+        {% for form in inlines.1 %}
+        {% for hidden in form.hidden_fields %}
+        {{ hidden }}
+        {% endfor %}
+        <tr>
+            <td>{{ form.label }}</td>
+            <td>{{ form.men }}</td>
+            <td>{{ form.women }}</td>
+            <td>{{ form.DELETE }}</td>
+        </tr>
+        {% endfor %}
+
+    </table>
+
+
+</div>
+
+<div class="form-group">
+    <table class="table table-striped table-sm">
+        <thead class="thead-inverse">
+          <tr>
+            <th>Primes ou indemnités décidées localement
+            </th>
+            <th>Hommes
+            </th>
+            <th>% des hommes
+            </th>
+            <th>Femmes
+            </th>
+            <th>% des femmes
+            </th>
+            <th>Total
+            </th>
+        </tr>
+    </thead>
+    <tr>
+        <td>Astreintes
+        </td>
+        <td>{{ form.penalty_men }}</td>
+        <td>{% verbatim %}{{ ratio_penalty_men | percent | round 2 }}{% endverbatim %}</td>
+        <td>{{ form.penalty_women }}</td>
+        <td>{% verbatim %}{{ ratio_penalty_women | percent | round 2 }}{% endverbatim %}</td>
+        <td>{% verbatim %}{{ total_penalty }}{% endverbatim %}</td>
+    </tr>
+    <tr>
+        <td>Heures supplémentaires
+        </td>
+        <td>{{ form.overtime_men }}</td>
+        <td>{% verbatim %}{{ ratio_overtime_men | percent | round 2 }}{% endverbatim %}</td>
+        <td>{{ form.overtime_women }}</td>
+        <td>{% verbatim %}{{ ratio_overtime_women | percent | round 2 }}{% endverbatim %}</td>
+        <td>{% verbatim %}{{ total_overtime }}{% endverbatim %}</td>
+    </tr>
+</table>
+<small class="form-text text-muted">Base de données REHUCIT</small>
+</div>
+
+<div class="form-group">
+
+    <table class="table table-striped table-sm">
+        <thead class="thead-inverse">
+          <tr>
+            <th>Nb de jours de formation
+            </th>
+            <th>Hommes
+            </th>
+            <th>Femmes
+            </th>
+            <th>Total
+            </th>
+        </tr>
+    </thead>
+    <tr>
+        <td>A+
+        </td>
+        <td>{{ form.a_plus_training_men }}</td>
+        <td>{{ form.a_plus_training_women }}</td>
+        <td>{% verbatim %}{{ total_a_plus_training }}{% endverbatim %}</td>
+    </tr>
+    <tr>
+        <td>A
+        </td>
+        <td>{{ form.a_training_men }}</td>
+        <td>{{ form.a_training_women }}</td>
+        <td>{% verbatim %}{{ total_a_training }}{% endverbatim %}</td>
+    </tr>
+    <tr>
+        <td>B
+        </td>
+        <td>{{ form.b_training_men }}</td>
+        <td>{{ form.b_training_women }}</td>
+        <td>{% verbatim %}{{ total_b_training }}{% endverbatim %}</td>
+    </tr>
+    <tr>
+        <td>C
+        </td>
+        <td>{{ form.c_training_men }}
+        </td>
+        <td>{{ form.c_training_women }}</td>
+        <td>{% verbatim %}{{ total_c_training }}{% endverbatim %}</td>
+    </tr>
+    <tr>
+        <td>OPA
+        </td>
+        <td>{{ form.opa_training_men }}</td>
+        <td>{{ form.opa_training_women }}</td>
+        <td>{% verbatim %}{{ total_opa_training }}{% endverbatim %}</td>
+    </tr>
+
+    <tr>
+        <td>C exploitation
+        </td>
+        <td>{{ form.c_exploitation_training_men }}</td>
+        <td>{{ form.c_exploitation_training_women }}</td>
+        <td>{% verbatim %}{{ total_c_exploitation_training }}{% endverbatim %}</td>
+    </tr>
+    <tr>
+        <td>Total
+        </td>
+        <td>{% verbatim %}{{ total_training_men }}{% endverbatim %}</td>
+        <td>{% verbatim %}{{ total_training_women }}{% endverbatim %}</td>
+        <td>{% verbatim %}{{ total_training }}{% endverbatim %}</td>
+    </tr>
+</table>
+
+<table class="table table-striped table-sm">
+    <thead class="thead-inverse">
+      <tr>
+        <th>Nb de jours moyens de formation
+        </th>
+        <th>Hommes
+        </th>
+        <th>Femmes
+        </th>
+        <th>Total
+        </th>
+    </tr>
+</thead>
+<tr>
+    <td>A+
+    </td>
+    <td>{% verbatim %}{{ ratio_a_plus_training_men | percent | round 2 }}{% endverbatim %}</td>
+    <td>{% verbatim %}{{ ratio_a_plus_training_women | percent | round 2 }}{% endverbatim %}</td>
+    <td>{% verbatim %}{{ ratio_a_plus_training | percent | round 2 }}{% endverbatim %}</td>
+</tr>
+<tr>
+    <td>A
+    </td>
+    <td>{% verbatim %}{{ ratio_a_training_men | percent | round 2 }}{% endverbatim %}</td>
+    <td>{% verbatim %}{{ ratio_a_training_women | percent | round 2 }}{% endverbatim %}</td>
+    <td>{% verbatim %}{{ ratio_a_training | percent | round 2 }}{% endverbatim %}</td>
+</tr>
+<tr>
+    <td>B
+    </td>
+    <td>{% verbatim %}{{ ratio_b_training_men | percent | round 2 }}{% endverbatim %}</td>
+    <td>{% verbatim %}{{ ratio_b_training_women | percent | round 2 }}{% endverbatim %}</td>
+    <td>{% verbatim %}{{ ratio_b_training | percent | round 2 }}{% endverbatim %}</td>
+</tr>
+<tr>
+    <td>C
+    </td>
+    <td>{% verbatim %}{{ ratio_c_training_men | percent | round 2 }}{% endverbatim %}</td>
+    <td>{% verbatim %}{{ ratio_c_training_women | percent | round 2 }}{% endverbatim %}</td>
+    <td>{% verbatim %}{{ ratio_c_training | percent | round 2 }}{% endverbatim %}</td>
+
+</tr>
+<tr>
+    <td>OPA
+    </td>
+    <td>{% verbatim %}{{ ratio_opa_training_men | percent | round 2 }}{% endverbatim %}</td>
+    <td>{% verbatim %}{{ ratio_opa_training_women | percent | round 2 }}{% endverbatim %}</td>
+    <td>{% verbatim %}{{ ratio_opa_training | percent | round 2 }}{% endverbatim %}</td>
+
+</tr>
+
+<tr>
+    <td>C exploitation
+    </td>
+    <td>{% verbatim %}{{ ratio_c_exploitation_training_men | percent | round 2 }}{% endverbatim %}</td>
+    <td>{% verbatim %}{{ ratio_c_exploitation_training_women | percent | round 2 }}{% endverbatim %}</td>
+    <td>{% verbatim %}{{ ratio_c_exploitation_training | percent | round 2 }}{% endverbatim %}</td>
+
+</tr>
+<tr>
+    <td>Total
+    </td>
+    <td>{% verbatim %}{{ ratio_training_men | percent | round 2 }}{% endverbatim %}</td>
+    <td>{% verbatim %}{{ ratio_training_women | percent | round 2 }}{% endverbatim %}</td>
+    <td>{% verbatim %}{{ ratio_training | percent | round 2 }}{% endverbatim %}</td>
+</tr>
+</table>
+
+</div>
+
+<div class="form-group">
+
+    <table class="table table-striped table-sm">
+        <thead class="thead-inverse">
+          <tr>
+            <th>Nb d’agents en congé de formation professionnelle et promotionnelle
+            </th>
+            <th>Hommes
+            </th>
+            <th>Femmes
+            </th>
+            <th>Total
+            </th>
+        </tr>
+    </thead>
+    <tr>
+        <td>Total
+        </td>
+        <td>{{ form.training_leave_men }}</td>
+        <td>{{ form.training_leave_women }}</td>
+        <td>{% verbatim %}{{ total_training_leave }}{% endverbatim %}</td>
+    </tr>
+</table>
+
+</div>
+
+
+<div class="form-group">
+
+    <table class="table table-striped table-sm">
+        <thead class="thead-inverse">
+          <tr>
+            <th>Nb d’accidents de travail
+            </th>
+            <th>Hommes
+            </th>
+            <th>Femmes
+            </th>
+            <th>Total
+            </th>
+        </tr>
+    </thead>
+    <tr>
+        <td>Total
+        </td>
+        <td>{{ form.work_accident_men }}</td>
+        <td>{{ form.work_accident_women }}</td>
+        <td>{% verbatim %}{{ total_work_accident }}{% endverbatim %}</td>
+    </tr>
+    <tr>
+        <td>Soit par agent :
+        </td>
+        <td>{% verbatim %}{{ ratio_work_accident_men | percent | round 2 }}{% endverbatim %}</td>
+        <td>{% verbatim %}{{ ratio_work_accident_women | percent | round 2 }}{% endverbatim %}</td>
+        <td>{% verbatim %}{{ ratio_work_accident | percent | round 2 }}{% endverbatim %}</td>
+    </tr>
+</table>
+
+</div>
+
+<div class="form-group">
+    <table class="table table-striped table-sm">
+        <thead class="thead-inverse">
+          <tr>
+            <th>Nb de congés ⩾ 6 mois pour raison familiale
+            </th>
+            <th>Hommes
+            </th>
+            <th>Femmes
+            </th>
+            <th>Total
+            </th>
+        </tr>
+    </thead>
+    <tr>
+        <td>Total
+        </td>
+        <td>{{ form.family_leave_men }}</td>
+        <td>{{ form.family_leave_women }}</td>
+        <td>{% verbatim %}{{ total_family_leave }}{% endverbatim %}</td>
+    </tr>
+</table>
+
+</div>
+<div class="form-group">
+    <label>Existence d’une charte du temps dans la structure ?</label>
+    {{ form.time_charter }}
+</div>
+
+
+<input type="submit" class="btn btn-block btn-primary" value="Enregistrer le rapport" />
+
+</form>
+
+{% endblock %}

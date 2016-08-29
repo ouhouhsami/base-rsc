@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+{% regroup surveys by year as year_list %}
+
+<h1>Rapports de situation comparée</h1>
+
+<ul class="list-unstyled">
+{% for year in year_list %}
+    <li>{{ year.grouper }}
+    <ul>
+        {% for survey in year.list %}
+          <li><a href="{% url 'detail' survey.id %}">{{ survey.structure }}</a></li>
+        {% endfor %}
+    </ul>
+    </li>
+{% endfor %}
+</ul>
+
+<div class="alert alert-warning" role="alert">
+  Proposer ici quelques visualisations de données (ex. proportions H/F par catégorie)
+</div>
+
+{% endblock %}
